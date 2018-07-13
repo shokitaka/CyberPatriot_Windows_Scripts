@@ -1,7 +1,5 @@
 @echo off
 
-:: Cool fam its a nice comment
-
 :: Start Message
 title Despacito.exe
 echo ==========================================
