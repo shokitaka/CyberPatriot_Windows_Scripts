@@ -83,29 +83,29 @@ else (
 :: Menu
 :menu
 cls
-echo 1) README                   g) Readme Requirements
-echo 2) Windows Update           h) Install programs
-echo 3) Server Manager           i) Update programs
-echo 4) Inf files                j) Services
-echo 5) SCM OS baselines         k) Media files
-echo 6) DISA Stig                l) Remove programs + features
-echo 7) Audit Policy             m) SCM IE baselines
-echo 8) Forensics                n) Application Settings
-echo 9) Add/Delete users         o) Hosts file
-echo a) Activate/Disable users   p) Operating system settings
-echo b) Add/Delete admins        q) Defensive Countermeasures
-echo c) Change passwords         r) Prohibited files
-echo d) Enable Firewall          s) Random list of things at the end
-echo e) Nessus                   
+echo 1) README                          g) Readme Requirements
+echo 2) Windows Update + Service Pack   h) Install programs
+echo 3) Server Manager                  i) Update programs
+echo 4) Inf files                       j) Services
+echo 5) SCM OS Baselines                k) Media files
+echo 6) DISA Stig                       l) Remove programs + features
+echo 7) Audit Policy                    m) SCM IE baselines
+echo 8) Forensics                       n) Backup
+echo 9) Add/Delete users                o) Application Settings
+echo a) Activate/Disable users          p) Hosts file
+echo b) Add/Delete admins               q) Operating system settings
+echo c) Change passwords                r) Defensive Countermeasures
+echo d) Enable Firewall                 s) Prohibited files
+echo e) Nessus                          t) Random list of things at the end
 echo f) MMC Stuff
 echo.
-echo t) Open DankMMC
-echo u) Jackson's super secret option
-echo v) Open official checklist
-echo w) Open master checklist
+echo u) Open DankMMC
+echo v) Jackson's super secret option
+echo w) Open official checklist
+echo x) Open master checklist
 echo.
 
-choice /c 123456789abcdefghijklmnopqrstuv /n /m "Where would you like to start? "
+choice /c 123456789abcdefghijklmnopqrstuvx /n /m "Where would you like to start? "
 goto %errorlevel%
 
 :: README
@@ -120,7 +120,7 @@ if %automode% == true goto 2
 
 goto menu
 
-:: Windows Update
+:: Windows Update + Service Pack
 :2
 if %automode% == true (
 	cls
@@ -131,6 +131,10 @@ if %automode% == true (
 	echo.
 
 	reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v AUOptions /t REG_DWORD /d 4 /f
+
+	if %processor_architecture% == x86 start /d "%userprofile%\Desktop\Win7CompFiles" Win7ServicePack32bit.exe
+	if %processor_architecture% == AMD64 start /d "%userprofile%\Desktop\Win7CompFiles" Win7ServicePack64bit.exe
+
 	goto 3
 )
 
@@ -241,8 +245,26 @@ if %automode% == true goto 6
 
 goto menu
 
-:: Audit Policy
+:: DISA Stig
 :6
+cls
+
+secedit /configure /db "%systemroot%\dankdatabase3.db" /cfg "%USERPROFILE%\Desktop\Server2008CompFiles\Server2008DISAStig.inf"
+if %errorlevel% == 1 echo. && echo Uh oh. Error happened.
+cls
+echo DISA Stig Done!
+echo.
+echo Check the scoring report and copy/paste the vulnerabilities into notepad.
+echo.
+
+pause
+
+if %automode% == true goto 7
+
+goto menu
+
+:: Audit Policy
+:7
 cls
 echo Import the two audit templates (AllAudit then NoAudit)
 echo.
@@ -266,10 +288,10 @@ echo.
 
 pause
 
-goto 7
+goto 8
 
 :: Forensics
-:7
+:8
 cls
 echo Hey! Do thein forensic question. Eek.
 echo.
@@ -292,8 +314,10 @@ start /d "%userprofile%\Desktop\Server2008CompFiles" users.txt
 
 pause
 
+goto 9
+
 :: Add/Delete Users
-:8
+:9
 cls
 net user
 
@@ -301,7 +325,7 @@ set /p choice="Add or remove user? (a/r) "
 if %choice% == a goto addusers
 if %choice% == r goto delusers
 if %choice% == n (
-	if %automode% == true goto 9
+	if %automode% == true goto 10
 	goto menu
 )
 if %choice% == re goto menu
@@ -311,7 +335,7 @@ cls
 net user
 
 set /p user="Enter a user to add... "
-if %user% == n goto 8
+if %user% == n goto 9
 if %user% == re goto menu
 net user %user% /add
 
@@ -322,20 +346,20 @@ cls
 net user
 
 set /p user="Enter a user to delete... "
-if %user% == n goto 8
+if %user% == n goto 9
 if %user% == re goto menu
 net user %user% /delete
 
 goto delusers
 
 :: Activate/Disable Users
-:9
+:10
 if %automode% == true (
 	cls
 	net user BroShirt /active:no
 	net user BroPants /active:no
 	for /f "skip=4 eol=;" %%a in (%userprofile%\Desktop\Server2008CompFiles\users.txt) do net user %%a /active:yes
-	goto 10
+	goto 11
 )
 
 net user BroPants /active:no
@@ -350,7 +374,7 @@ set /p choice="Activate or disable user? (a/d) "
 if %choice% == a goto activateusers
 if %choice% == d goto disableusers
 if %choice% == n (
-	if %automode% == true goto 10
+	if %automode% == true goto 11
 	goto menu
 )
 if %choice% == re goto menu
@@ -360,7 +384,7 @@ cls
 net user
 
 set /p user="Enter a user to activate... "
-if %user% == n goto 9
+if %user% == n goto 10
 if %user% == re goto menu
 net user %user% /active:yes
 
@@ -371,14 +395,14 @@ cls
 net user
 
 set /p user="Enter a user to disable... "
-if %user% == n goto 9
+if %user% == n goto 10
 if %user% == re goto menu
 net user %user% /active:no
 
 goto disableusers
 
 :: Deleting/adding admins
-:10
+:11
 cls
 net localgroup administrators
 
@@ -387,7 +411,7 @@ set /p choice="Add or remove admin? (a/r) "
 if %choice% == a goto addadmins
 if %choice% == r goto deladmins
 if %choice% == n (
-	if %automode% == true goto 11
+	if %automode% == true goto 12
 	goto menu
 )
 if %choice% == re goto menu
@@ -398,7 +422,7 @@ net user
 net localgroup administrators
 
 set /p user="Enter a user to add to admin group... "
-if %user% == n goto 10
+if %user% == n goto 11
 if %user% == re goto menu
 net localgroup administrators %user% /add
 
@@ -409,18 +433,18 @@ cls
 net localgroup administrators
 
 set /p user="Enter a user to remove from admin group... "
-if %user% == n goto 10
+if %user% == n goto 11
 if %user% == re goto menu
 net localgroup administrators %user% /delete
 
 goto deladmins
 
 :: Changing passwords
-:11
+:12
 if %automode% == true (
 	cls
 	for /f "skip=2 eol=;" %%a in (%userprofile%\Desktop\Server2008CompFiles\users.txt) do net user %%a abc123ABC123@@
-	goto 12
+	goto 13
 )
 
 cls
@@ -431,7 +455,7 @@ echo.
 
 set /p user="Enter user for password change... "
 if %user% == n (
-	if %automode% == true goto 12
+	if %automode% == true goto 13
 	goto menu
 )
 if %user% == re goto menu
@@ -441,27 +465,27 @@ echo Done!
 echo.
 
 set /p cont="Continue? "
-if %cont% == y goto 11
+if %cont% == y goto 12
 if %cont% == n (
-	if %automode% == true goto 12
+	if %automode% == true goto 13
 	goto menu
 )
 if %cont% == re goto menu
 
 :: Enable firewall + template
-:12
+:13
 cls
 netsh advfirewall import "%USERPROFILE%\Desktop\Server2008CompFiles\Server2008Firewall.wfw"
 if %errorlevel% == 1 echo. && echo Uh oh. Error happened.
 netsh advfirewall set allprofiles state on
 if %errorlevel% == 1 echo. && echo Uh oh. Error happened.
 
-if %automode% == true goto 13
+if %automode% == true goto 14
 
 goto menu
 
 :: Nessus
-:13
+:14
 cls
 ipconfig
 echo.
@@ -471,12 +495,12 @@ echo.
 
 pause
 
-if %automode% == true goto 14
+if %automode% == true goto 15
 
 goto menu
 
 :: MMC Stuff
-:14
+:15
 cls
 echo Do various stuff with MMC.
 echo.
@@ -490,12 +514,12 @@ echo.
 
 pause
 
-if %automode% == true goto 15
+if %automode% == true goto 16
 
 goto menu
 
 :: README Requirements
-:15
+:16
 cls
 echo Open the readme and do the specific things it says to do.
 echo Could be enabling service, adding user/group, etc.
@@ -503,12 +527,12 @@ echo.
 
 pause
 
-if %automode% == true goto 16
+if %automode% == true goto 17
 
 goto menu
 
 :: Install programs
-:16
+:17
 cls
 echo Run the programs when they open up.
 echo.
@@ -529,12 +553,12 @@ start /d "%programfiles%\Microsoft Baseline Security Analyzer 2" mbsa.exe
 start /d "%programfiles%\Microsoft Security Client" msseces.exe
 start /d "%programfiles%\Nmap" zenmap.exe
 
-if %automode% == true goto 17
+if %automode% == true goto 18
 
 goto menu
 
 :: Update programs
-:17
+:18
 if %automode% == true (
 	cls
 	choco upgrade all
@@ -567,12 +591,12 @@ echo.
 
 pause
 
-if %automode% == true goto 18
+if %automode% == true goto 19
 
 goto menu
 
 :: Services
-:18
+:19
 cls
 if %automode% == true (
 	sc stop tlntsvr
@@ -613,7 +637,7 @@ if %automode% == true (
 	sc config EventSystem start= disabled
 	sc stop SysMain
 	sc config SysMain start= disabled
-	goto 19
+	goto 20
 )
 
 echo tlntsvr (Telnet)
@@ -681,7 +705,7 @@ if %choice% == def (
 	sc config EventSystem start= disabled
 	sc stop SysMain
 	sc config SysMain start= disabled
-	goto 18
+	goto 19
 )
 
 :enableserv
@@ -707,7 +731,7 @@ echo SysMain (Superfetch)
 echo.
 
 set /p serv="Enter a service to enable... "
-if %serv% == n goto 18
+if %serv% == n goto 19
 if %serv% == re goto menu
 
 sc config %serv% start= auto
@@ -718,7 +742,7 @@ echo.
 
 set /p cont="Continue? "
 if %cont% == y goto enableserv
-if %cont% == n goto 18
+if %cont% == n goto 19
 if %cont% == re goto menu
 
 :disablegud
@@ -744,7 +768,7 @@ echo SysMain (Superfetch)
 echo.
 
 set /p serv="Enter a service to disable... "
-if %serv% == n goto 18
+if %serv% == n goto 19
 if %serv% == re goto menu
 
 sc stop %serv%
@@ -755,11 +779,11 @@ echo.
 
 set /p cont="Continue? "
 if %cont% == y goto disablegud
-if %cont% == n goto 18
+if %cont% == n goto 19
 if %cont% == re goto menu
 
 :: Media Files
-:19
+:20
 
 if %automode% == true goto deletemf
 
@@ -768,7 +792,7 @@ set /p choice="Search for or delete media files? (s/d) "
 if %choice% == s goto searchmf
 if %choice% == d goto deletemf
 if %choice% == n (
-	if %automode% == true goto 20
+	if %automode% == true goto 21
 	goto menu
 )
 if %choice% == re goto menu
@@ -803,9 +827,9 @@ start mediafiles.txt
 
 pause
 
-if %automode% == true goto 20
+if %automode% == true goto 21
 
-goto 19
+goto 20
 
 :searchmf
 cls
@@ -823,12 +847,12 @@ start mediafiles.txt
 
 pause
 
-if %automode% == true goto 20
+if %automode% == true goto 21
 
-goto 19
+goto 20
 
 :: Remove Programs + Features
-:20
+:21
 cls
 echo MAKE SURE YOU DO ALL OF THE TINGS. DO IT GOOD.
 echo.
@@ -848,22 +872,40 @@ start sketchyfiles.txt
 
 pause
 
-if %automode% == true goto 21
-
-goto menu
-
-:: SCM IE Baselines
-:21
-cls
-"%USERPROFILE%\Desktop\Server2008CompFiles\SCMBaselines\LGPO.exe" /g "%USERPROFILE%\Desktop\Server2008CompFiles\SCMBaselines\IE9_Com_Sec"
-"%USERPROFILE%\Desktop\Server2008CompFiles\SCMBaselines\LGPO.exe" /g "%USERPROFILE%\Desktop\Server2008CompFiles\SCMBaselines\IE9_User_Sec"
-
 if %automode% == true goto 22
 
 goto menu
 
-:: Application Settings
+:: SCM IE Baselines
 :22
+cls
+"%USERPROFILE%\Desktop\Server2008CompFiles\SCMBaselines\LGPO.exe" /g "%USERPROFILE%\Desktop\Server2008CompFiles\SCMBaselines\IE9_Com_Sec"
+"%USERPROFILE%\Desktop\Server2008CompFiles\SCMBaselines\LGPO.exe" /g "%USERPROFILE%\Desktop\Server2008CompFiles\SCMBaselines\IE9_User_Sec"
+
+if %automode% == true goto 23
+
+goto menu
+
+:: Backup
+:23
+cls
+
+::diskpart
+::list volume
+::exit
+
+::set /p location="Enter the drive letter for the backup location... "
+::pause
+
+::wbadmin enable backup -addtarget:%location%:\ REM-include: C:\
+::pause
+
+::if %automode% == true goto 23
+
+::goto menu
+
+:: Application Settings
+:24
 cls
 echo IF YOU'RE ON A SERVER OS, focus on this a little more.
 echo.
@@ -882,24 +924,24 @@ start firefox.exe
 
 pause
 
-if %automode% == true goto 23
+if %automode% == true goto 25
 
 goto menu
 
 :: Hosts file
-:23
+:25
 cls
 takeown /f "%systemroot%\system32\drivers\etc"
 
 del "%systemroot%\system32\drivers\etc\hosts"
 copy "%userprofile%\Desktop\Server2008CompFiles\hosts" "%systemroot%\system32\drivers\etc\hosts"
 
-if %automode% == true goto 24
+if %automode% == true goto 26
 
 goto menu
 
 :: Operating System Settings
-:24
+:26
 cls
 echo IF YOU'RE ON A SERVER OS, focus on this a little more.
 echo.
@@ -923,12 +965,12 @@ start /d "%systemroot%\System32" SystemPropertiesRemote.exe
 
 pause
 
-if %automode% == true goto 25
+if %automode% == true goto 27
 
 goto menu
 
 :: Defensive Countermeasures
-:25
+:27
 cls
 echo Set some gucci defensive countermeasures.
 echo.
@@ -941,12 +983,12 @@ echo.
 
 pause
 
-if %automode% == true goto 26
+if %automode% == true goto 28
 
 goto menu
 
 :: Prohibited files
-:26
+:28
 cls
 echo Yaboi prohibited files.
 echo.
@@ -961,12 +1003,12 @@ start eek.txt
 
 pause
 
-if %automode% == true goto 27
+if %automode% == true goto 29
 
 goto menu
 
 :: Random Things At The End
-:27
+:29
 cls
 echo Check processes for sketchiness.
 echo.
@@ -1011,21 +1053,21 @@ pause
 goto menu
 
 :: Open DankMMC
-:28
+:30
 start /d "%userprofile%\Desktop\Server2008CompFiles" DankMMC.msc
 goto menu
 
 :: Change visual effects for performance
-:29
+:31
 start /d "%systemroot%\system32" SystemPropertiesPerformance.exe
 goto menu
 
 :: Open official checklist
-:30
+:32
 start /d "%userprofile%\Desktop\Server2008CompFiles" OfficialServer2008Checklist.docx
 goto menu
 
 :: Open master checklist
-:31
+:33
 start /d "%userprofile%\Desktop\Server2008CompFiles" DankoWindowsChecklist_MadeByTimon.txt
 goto menu

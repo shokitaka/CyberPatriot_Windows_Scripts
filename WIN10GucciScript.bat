@@ -4,7 +4,7 @@
 title Despacito.exe
 echo ==========================================
 echo       Windows 10 CyberPatriot Script
-echo             by Jackson Kauflin
+echo            by Jackson Kauflin
 echo.
 echo     This script is dedicated to Drake
 echo  because he make sure that north-side eat
@@ -83,27 +83,28 @@ else (
 :: Menu
 :menu
 cls
-echo 1) README                          e) Readme Requirements
-echo 2) Windows Update                  f) Install programs
-echo 3) Inf files                       g) Update programs
-echo 4) SCM OS baselines                h) Services
-echo 5) Audit Policy                    i) Media files
-echo 6) Forensics                       j) Remove programs + features
-echo 7) Add/Delete users                k) SCM IE baselines
-echo 8) Activate/Disable users          l) Application Settings
-echo 9) Add/Delete admins               m) Hosts file
-echo a) Change passwords                n) Operating system settings
-echo b) Enable Firewall                 o) Defensive Countermeasures
-echo c) Nessus                          p) Prohibited files
-echo d) MMC Stuff                       q) Random list of things at the end
+echo 1) README                          f) Install programs
+echo 2) Windows Update                  g) Update programs
+echo 3) Inf files                       h) Services
+echo 4) SCM OS baselines                i) Media files
+echo 5) Audit Policy                    j) Remove programs + features
+echo 6) Forensics                       k) SCM IE baselines
+echo 7) Add/Delete users                l) Backup
+echo 8) Activate/Disable users          m) Application Settings
+echo 9) Add/Delete admins               n) Hosts file
+echo a) Change passwords                o) Operating system settings
+echo b) Enable Firewall                 p) Defensive Countermeasures
+echo c) Nessus                          q) Prohibited files
+echo d) MMC Stuff                       r) Random list of things at the end
+echo e) Readme Requirements
 echo.
-echo r) Open DankMMC
-echo s) Jackson's super secret option
-echo t) Open official checklist
-echo u) Open master checklist
+echo s) Open DankMMC
+echo t) Jackson's super secret option
+echo u) Open official checklist
+echo v) Open master checklist
 echo.
 
-choice /c 123456789abcdefghijklmnopqrstu /n /m "Where would you like to start? "
+choice /c 123456789abcdefghijklmnopqrstuv /n /m "Where would you like to start? "
 goto %errorlevel%
 
 :: README
@@ -260,6 +261,8 @@ start /d "%userprofile%\Desktop\Win10CompFiles" users.txt
 
 pause
 
+goto 7
+
 :: Add/Delete Users
 :7
 cls
@@ -405,7 +408,16 @@ if %user% == n (
 if %user% == re goto menu
 net user %user% abc123ABC123@@
 
-goto 10
+echo Done!
+echo.
+
+set /p cont="Continue? "
+if %cont% == y goto 10
+if %cont% == n (
+	if %automode% == true goto 11
+	goto menu
+)
+if %cont% == re goto menu
 
 :: Enable firewall + template
 :11
@@ -844,8 +856,26 @@ if %automode% == true goto 21
 
 goto menu
 
-:: Application Settings
+:: Backup
 :21
+cls
+
+::diskpart
+::list volume
+::exit
+
+::set /p location="Enter the drive letter for the backup location... "
+::pause
+
+::wbadmin enable backup -addtarget:%location%:\ REM-include: C:\
+::pause
+
+::if %automode% == true goto 22
+
+::goto menu
+
+:: Application Settings
+:22
 cls
 echo IF YOU'RE ON A SERVER OS, focus on this a little more.
 echo.
@@ -864,24 +894,24 @@ start firefox.exe
 
 pause
 
-if %automode% == true goto 22
+if %automode% == true goto 23
 
 goto menu
 
 :: Hosts file
-:22
+:23
 cls
 takeown /f "%systemroot%\system32\drivers\etc"
 
 del "%systemroot%\system32\drivers\etc\hosts"
 copy "%userprofile%\Desktop\Win10CompFiles\hosts" "%systemroot%\system32\drivers\etc\hosts"
 
-if %automode% == true goto 23
+if %automode% == true goto 24
 
 goto menu
 
 :: Operating System Settings
-:23
+:24
 cls
 echo IF YOU'RE ON A SERVER OS, focus on this a little more.
 echo.
@@ -905,12 +935,12 @@ start /d "%systemroot%\System32" SystemPropertiesRemote.exe
 
 pause
 
-if %automode% == true goto 24
+if %automode% == true goto 25
 
 goto menu
 
 :: Defensive Countermeasures
-:24
+:25
 cls
 echo Set some gucci defensive countermeasures.
 echo.
@@ -923,12 +953,12 @@ echo.
 
 pause
 
-if %automode% == true goto 25
+if %automode% == true goto 26
 
 goto menu
 
 :: Prohibited files
-:25
+:26
 cls
 echo Yaboi prohibited files.
 echo.
@@ -943,12 +973,12 @@ start eek.txt
 
 pause
 
-if %automode% == true goto 26
+if %automode% == true goto 27
 
 goto menu
 
 :: Random Things At The End
-:26
+:27
 cls
 echo Check processes for sketchiness.
 echo.
@@ -993,21 +1023,21 @@ pause
 goto menu
 
 :: Open DankMMC
-:27
+:28
 start /d "%userprofile%\Desktop\Win10CompFiles" DankMMC.msc
 goto menu
 
 :: Change visual effects for performance
-:28
+:29
 start /d "%systemroot%\system32" SystemPropertiesPerformance.exe
 goto menu
 
 :: Open official checklist
-:29
+:30
 start /d "%userprofile%\Desktop\Win10CompFiles" OfficialWin10Checklist.docx
 goto menu
 
 :: Open master checklist
-:30
+:31
 start /d "%userprofile%\Desktop\Win10CompFiles" DankoWindowsChecklist_MadeByTimon.txt
 goto menu

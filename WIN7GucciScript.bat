@@ -4,7 +4,7 @@
 title Despacito.exe
 echo ==========================================
 echo        Windows 7 CyberPatriot Script
-echo             by Jackson Kauflin
+echo            by Jackson Kauflin
 echo.
 echo     This script is dedicated to Drake
 echo  because he make sure that north-side eat
@@ -130,6 +130,10 @@ if %automode% == true (
 	echo.
 
 	reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v AUOptions /t REG_DWORD /d 4 /f
+
+	if %processor_architecture% == x86 start /d "%userprofile%\Desktop\Win7CompFiles" Win7ServicePack32bit.exe
+	if %processor_architecture% == AMD64 start /d "%userprofile%\Desktop\Win7CompFiles" Win7ServicePack64bit.exe
+
 	goto 3
 )
 
@@ -282,6 +286,8 @@ start /d "%userprofile%\Desktop\Win7CompFiles" users.txt
 
 pause
 
+goto 8
+
 :: Add/Delete Users
 :8
 cls
@@ -427,7 +433,16 @@ if %user% == n (
 if %user% == re goto menu
 net user %user% abc123ABC123@@
 
-goto 11
+echo Done!
+echo.
+
+set /p cont="Continue? "
+if %cont% == y goto 11
+if %cont% == n (
+	if %automode% == true goto 12
+	goto menu
+)
+if %cont% == re goto menu
 
 :: Enable firewall + template
 :12
@@ -847,19 +862,19 @@ goto menu
 :22
 cls
 
-diskpart
-list volume
-exit
+::diskpart
+::list volume
+::exit
 
-set /p location="Enter the drive letter for the backup location... "
-pause
+::set /p location="Enter the drive letter for the backup location... "
+::pause
 
-wbadmin enable backup -addtarget:%location%:\ REM-include: C:\
-pause
+::wbadmin enable backup -addtarget:%location%:\ REM-include: C:\
+::pause
 
-if %automode% == true goto 23
+::if %automode% == true goto 23
 
-goto menu
+::goto menu
 
 :: Application Settings
 :23

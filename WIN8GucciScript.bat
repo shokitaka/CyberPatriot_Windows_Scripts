@@ -90,21 +90,21 @@ echo 4) SCM OS baselines                i) Services
 echo 5) DISA Stig                       j) Media files
 echo 6) Audit Policy                    k) Remove programs + features
 echo 7) Forensics                       l) SCM IE baselines
-echo 8) Add/Delete users                m) Application Settings
-echo 9) Activate/Disable users          n) Hosts file
-echo a) Add/Delete admins               o) Operating system settings
-echo b) Change passwords                p) Defensive Countermeasures
-echo c) Enable Firewall                 q) Prohibited files
-echo d) Nessus                          r) Random list of things at the end
-echo e) MMC Stuff
+echo 8) Add/Delete users                m) Backup
+echo 9) Activate/Disable users          n) Application Settings
+echo a) Add/Delete admins               o) Hosts file
+echo b) Change passwords                p) Operating system settings
+echo c) Enable Firewall                 q) Defensive Countermeasures
+echo d) Nessus                          r) Prohibited files
+echo e) MMC Stuff                       s) Random list of things at the end
 echo.
-echo s) Open DankMMC
-echo t) Jackson's super secret option
-echo u) Open official checklist
-echo v) Open master checklist
+echo t) Open DankMMC
+echo u) Jackson's super secret option
+echo v) Open official checklist
+echo w) Open master checklist
 echo.
 
-choice /c 123456789abcdefghijklmnopqrstuv /n /m "Where would you like to start? "
+choice /c 123456789abcdefghijklmnopqrstuvw /n /m "Where would you like to start? "
 goto %errorlevel%
 
 :: README
@@ -278,6 +278,8 @@ start /d "%userprofile%\Desktop\Win8CompFiles" users.txt
 
 pause
 
+goto 8
+
 :: Add/Delete Users
 :8
 cls
@@ -423,7 +425,16 @@ if %user% == n (
 if %user% == re goto menu
 net user %user% abc123ABC123@@
 
-goto 11
+echo Done!
+echo.
+
+set /p cont="Continue? "
+if %cont% == y goto 11
+if %cont% == n (
+	if %automode% == true goto 12
+	goto menu
+)
+if %cont% == re goto menu
 
 :: Enable firewall + template
 :12
@@ -839,8 +850,26 @@ if %automode% == true goto 22
 
 goto menu
 
-:: Application Settings
+:: Backup
 :22
+cls
+
+::diskpart
+::list volume
+::exit
+
+::set /p location="Enter the drive letter for the backup location... "
+::pause
+
+::wbadmin enable backup -addtarget:%location%:\ REM-include: C:\
+::pause
+
+::if %automode% == true goto 23
+
+::goto menu
+
+:: Application Settings
+:23
 cls
 echo IF YOU'RE ON A SERVER OS, focus on this a little more.
 echo.
@@ -859,24 +888,24 @@ start firefox.exe
 
 pause
 
-if %automode% == true goto 23
+if %automode% == true goto 24
 
 goto menu
 
 :: Hosts file
-:23
+:24
 cls
 takeown /f "%systemroot%\system32\drivers\etc"
 
 del "%systemroot%\system32\drivers\etc\hosts"
 copy "%userprofile%\Desktop\Win8CompFiles\hosts" "%systemroot%\system32\drivers\etc\hosts"
 
-if %automode% == true goto 24
+if %automode% == true goto 25
 
 goto menu
 
 :: Operating System Settings
-:24
+:25
 cls
 echo IF YOU'RE ON A SERVER OS, focus on this a little more.
 echo.
@@ -900,12 +929,12 @@ start /d "%systemroot%\System32" SystemPropertiesRemote.exe
 
 pause
 
-if %automode% == true goto 25
+if %automode% == true goto 26
 
 goto menu
 
 :: Defensive Countermeasures
-:25
+:26
 cls
 echo Set some gucci defensive countermeasures.
 echo.
@@ -918,12 +947,12 @@ echo.
 
 pause
 
-if %automode% == true goto 26
+if %automode% == true goto 27
 
 goto menu
 
 :: Prohibited files
-:26
+:27
 cls
 echo Yaboi prohibited files.
 echo.
@@ -938,12 +967,12 @@ start eek.txt
 
 pause
 
-if %automode% == true goto 27
+if %automode% == true goto 28
 
 goto menu
 
 :: Random Things At The End
-:27
+:28
 cls
 echo Check processes for sketchiness.
 echo.
@@ -988,21 +1017,21 @@ pause
 goto menu
 
 :: Open DankMMC
-:28
+:29
 start /d "%userprofile%\Desktop\Win8CompFiles" DankMMC.msc
 goto menu
 
 :: Change visual effects for performance
-:29
+:30
 start /d "%systemroot%\system32" SystemPropertiesPerformance.exe
 goto menu
 
 :: Open official checklist
-:30
+:31
 start /d "%userprofile%\Desktop\Win8CompFiles" OfficialWin8Checklist.docx
 goto menu
 
 :: Open master checklist
-:31
+:32
 start /d "%userprofile%\Desktop\Win8CompFiles" DankoWindowsChecklist_MadeByTimon.txt
 goto menu
