@@ -278,6 +278,8 @@ start /d "%userprofile%\Desktop\Server2016CompFiles" users.txt
 
 pause
 
+goto 8
+
 :: Add/Delete Users
 :8
 cls
