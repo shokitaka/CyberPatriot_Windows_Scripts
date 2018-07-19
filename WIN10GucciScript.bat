@@ -492,7 +492,7 @@ choco feature enable -n allowGlobalConfirmation
 choco feature enable -n useFipsCompliantChecksums
 
 cls
-choco install firefox ie11 malwarebytes mbsa microsoftsecurityessentials nmap --ignorechecksum --force
+choco install firefox ie11 malwarebytes mbsa microsoftsecurityessentials nmap jre8 --ignorechecksum --force
 pause
 
 start /d "%programfiles%\Malwarebytes\Anti-Malware" mbam.exe
@@ -932,6 +932,14 @@ echo.
 
 start /d "%SystemRoot%\system32" control.exe
 start /d "%systemroot%\System32" SystemPropertiesRemote.exe
+
+pause
+
+cls
+echo What up it's ya boi cat-lite scanner here. imma scan and be cool.
+echo.
+
+start /d "%USERPROFILE%\Desktop\Win10CompFiles\cis-cat-lite" CISCAT.jar
 
 pause
 
