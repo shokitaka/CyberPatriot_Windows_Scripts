@@ -917,24 +917,30 @@ goto menu
 cls
 echo IF YOU'RE ON A SERVER OS, focus on this a little more.
 echo.
-echo Check operating system settings.
+echo Enable screen saver + check "logon on resume"
 echo.
-echo - Enable screen saver + check "logon on resume"
-echo.
-echo - Check file permissions for danko folders
-echo.
-echo - Enable/Set up backup
-echo.
-echo - Disable remote desktop
-echo.
-echo - Check action center (doesn't apply for Server 2008)
-echo.
-echo - Enable UAC
-echo.
-
 start /d "%SystemRoot%\system32" control.exe
-start /d "%systemroot%\System32" SystemPropertiesRemote.exe
+pause
 
+cls
+echo Check file permissions for danko folders
+echo.
+pause
+
+cls
+echo Disable remote desktop
+echo.
+start /d "%systemroot%\System32" SystemPropertiesRemote.exe
+pause
+
+cls
+echo Check action center (doesn't apply to Server 2008)
+echo.
+pause
+
+cls
+echo Enable UAC
+echo.
 pause
 
 if %automode% == true goto 26
@@ -944,15 +950,18 @@ goto menu
 :: Defensive Countermeasures
 :26
 cls
-echo Set some gucci defensive countermeasures.
+echo Make sure windows defender is danko enabled
 echo.
-echo - Make sure windows defender is danko enabled
-echo.
-echo - Make sure you have the security programs installed
-echo.
-echo - Scan on all those programs
-echo.
+pause
 
+cls
+echo Make sure you have the security programs installed
+echo.
+pause
+
+cls
+echo Scan on all those programs
+echo.
 pause
 
 if %automode% == true goto 27
@@ -987,22 +996,27 @@ echo.
 start taskmgr.exe
 start firefox.exe www.processlibrary.com
 pause
+
 cls
 echo Vulns from other images
 echo.
 pause
+
 cls
 echo Go through every single step again (extreme thorough-ness not super necessary)
 echo.
 pause
+
 cls
 echo Past comp vulns (Make Peter or someone read them)
 echo.
 pause
+
 cls
 echo Go through everthing AGAIN MY MAN
 echo.
 pause
+
 cls
 echo Official checklist
 echo.
