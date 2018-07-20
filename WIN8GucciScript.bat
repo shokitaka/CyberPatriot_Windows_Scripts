@@ -853,20 +853,13 @@ goto menu
 :: Backup
 :22
 cls
+set /p location="Enter the drive letter for the backup location... "
 
-::diskpart
-::list volume
-::exit
+wbadmin enable backup -addtarget:%location%: -include:C: -schedule:03:00 -quiet
 
-::set /p location="Enter the drive letter for the backup location... "
-::pause
+if %automode% == true goto 23
 
-::wbadmin enable backup -addtarget:%location%:\ REM-include: C:\
-::pause
-
-::if %automode% == true goto 23
-
-::goto menu
+goto menu
 
 :: Application Settings
 :23
