@@ -1,0 +1,3 @@
+Changes that need to be made:
+
+	- Insert commands replacing start /d things (refer to cool.txt n stuff)
