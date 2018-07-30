@@ -1,3 +1,21 @@
 Changes that need to be made:
 
-	- Insert commands replacing start /d things (refer to cool.txt n stuff)
+	- download sysinternals suite and add to comp files folders
+
+	- Insert commands replacing start /d things
+		- action center: wscui.cpl
+		- shares: fsmgmt.msc
+		- event viewer: eventvwr.msc
+		- remote desktop: sysdm.cpl
+
+	- replace shares subsection with cmd net share
+
+	- change dankmmc to only open menu mode
+
+	- make services into 2 part section
+		- 1st: normal
+		- 2nd: open to look at sketchy services
+
+	- add sysinternals section midway through
+
+	- change user sections to use one line
