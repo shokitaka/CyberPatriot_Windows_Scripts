@@ -459,16 +459,7 @@ if %user% == n (
 if %user% == re goto menu
 net user %user% abc123ABC123@@
 
-echo Done!
-echo.
-
-set /p cont="Continue? "
-if %cont% == y goto 12
-if %cont% == n (
-	if %automode% == true goto 13
-	goto menu
-)
-if %cont% == re goto menu
+goto 12
 
 :: Enable firewall + template
 :13
@@ -755,13 +746,7 @@ if %serv% == re goto menu
 sc config %serv% start= auto
 sc start %serv%
 
-echo Done!
-echo.
-
-set /p cont="Continue? "
-if %cont% == y goto enableserv
-if %cont% == n goto 19
-if %cont% == re goto menu
+goto enableserv
 
 :disablegud
 cls
@@ -792,13 +777,7 @@ if %serv% == re goto menu
 sc stop %serv%
 sc config %serv% start= disabled
 
-echo Done!
-echo.
-
-set /p cont="Continue? "
-if %cont% == y goto disablegud
-if %cont% == n goto 19
-if %cont% == re goto menu
+goto disablegud
 
 :manualserv
 cls

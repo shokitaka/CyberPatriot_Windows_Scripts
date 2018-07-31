@@ -9,5 +9,3 @@ Changes that need to be made:
 	- add event viewer section
 
 	- update checklist to reflect new sections
-
-	- remove continue prompts yeet
