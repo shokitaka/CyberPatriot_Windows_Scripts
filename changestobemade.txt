@@ -15,3 +15,5 @@ Changes that need to be made:
 	- add enable event viewer to default service change list
 
 	- add event viewer section
+
+	- update checklist to reflect new sections
