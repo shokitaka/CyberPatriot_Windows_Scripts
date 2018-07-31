@@ -475,14 +475,14 @@ goto sharestart
 :mmccont
 cls
 echo Check locked users/other user stuff
-echo You may have to open MMC RIP
 echo.
-gpedit.msc
+if %automode% == true compmgmt.msc
 pause
 
 cls
 echo Enable Windows Defender
 echo.
+if %automode% == true gpedit.msc
 pause
 
 cls
