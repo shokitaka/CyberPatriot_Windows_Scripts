@@ -1,9 +1,5 @@
 Changes that need to be made:
 
-	- make services into 2 part section
-		- 1st: normal
-		- 2nd: open to look at sketchy services
-
 	- add sysinternals section midway through
 
 	- change user sections to use one line

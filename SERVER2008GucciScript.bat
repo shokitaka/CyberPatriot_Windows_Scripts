@@ -655,7 +655,7 @@ if %automode% == true (
 	sc config EventSystem start= disabled
 	sc stop SysMain
 	sc config SysMain start= disabled
-	goto 20
+	goto manualserv
 )
 
 echo tlntsvr (Telnet)
@@ -682,7 +682,7 @@ set /p choice="Enable or Disable Service? (e/d/def) "
 
 if %choice% == e goto enableserv
 if %choice% == d goto disablegud
-if %choice% == n goto menu
+if %choice% == n goto manualserv
 if %choice% == re goto menu
 if %choice% == def (
 	sc stop tlntsvr
@@ -799,6 +799,17 @@ set /p cont="Continue? "
 if %cont% == y goto disablegud
 if %cont% == n goto 19
 if %cont% == re goto menu
+
+:manualserv
+cls
+echo Now look for sketchy services to disable and stuff
+echo.
+services.msc
+pause
+
+if %automode% == true goto 20
+
+goto menu
 
 :: Media Files
 :20
