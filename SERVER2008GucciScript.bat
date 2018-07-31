@@ -60,7 +60,7 @@ if %autochoice% == secret (
 	cls
 	echo Ooh. Super secret special ting.
 	echo.
-	start /d "%systemroot%\system32" SystemPropertiesPerformance.exe
+	sysdm.cpl
 	pause
 	goto autochoice
 )
@@ -504,6 +504,8 @@ goto menu
 cls
 echo Do various stuff with MMC.
 echo.
+:: fsmgmt.msc
+:: gpedit.msc
 echo - Check Folder/File Sharing
 echo - Windows Components stuff
 echo - Check locked users/other user stuff
@@ -940,7 +942,7 @@ echo IF YOU'RE ON A SERVER OS, focus on this a little more.
 echo.
 echo Enable screen saver + check "logon on resume"
 echo.
-start /d "%SystemRoot%\system32" control.exe
+control desktop
 pause
 
 cls
@@ -951,7 +953,7 @@ pause
 cls
 echo Disable remote desktop
 echo.
-start /d "%systemroot%\System32" SystemPropertiesRemote.exe
+sysdm.cpl
 pause
 
 cls
@@ -1066,7 +1068,7 @@ goto menu
 
 :: Change visual effects for performance
 :31
-start /d "%systemroot%\system32" SystemPropertiesPerformance.exe
+sysdm.cpl
 goto menu
 
 :: Open official checklist
@@ -1076,5 +1078,5 @@ goto menu
 
 :: Open master checklist
 :33
-start /d "%userprofile%\Desktop\Server2008CompFiles" DankoWindowsChecklist_MadeByTimon.txt
+start /d "%userprofile%\Desktop\Server2008CompFiles" OurGloriousChecklist2018_Windows.txt
 goto menu

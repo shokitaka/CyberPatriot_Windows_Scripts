@@ -1,11 +1,5 @@
 Changes that need to be made:
 
-	- Insert commands replacing start /d things
-		- action center: wscui.cpl
-		- shares: fsmgmt.msc
-		- event viewer: eventvwr.msc
-		- remote desktop: sysdm.cpl
-
 	- replace shares subsection with cmd net share
 
 	- change dankmmc to only open menu mode
