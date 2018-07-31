@@ -448,17 +448,37 @@ goto menu
 
 :: MMC Stuff
 :13
+:sharestart
 cls
-echo Do various stuff with MMC.
+net share
 echo.
-echo - Check Folder/File Sharing
-echo - Windows Components stuff
-echo - Check locked users/other user stuff
-echo - Enable Windows Defender
-echo - Enable Smartscreen (doesn't apply to Server 2008)
-echo - Disable autoplay
-echo.
+set /p share="Choose a share to delete cause it sketchy... "
+if %share% == n goto mmccont
+if %share% == re goto menu
+net share %share% /del
+goto sharestart
 
+:mmccont
+cls
+echo Check locked users/other user stuff
+echo You may have to open MMC RIP
+echo.
+gpedit.msc
+pause
+
+cls
+echo Enable Windows Defender
+echo.
+pause
+
+cls
+echo Enable Smartscreen (doesn't apply to Server 2008)
+echo.
+pause
+
+cls
+echo Disable autoplay
+echo.
 pause
 
 if %automode% == true goto 14
