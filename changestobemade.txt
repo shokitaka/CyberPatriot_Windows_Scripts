@@ -1,7 +1,5 @@
 Changes that need to be made:
 
-	- change dankmmc to only open menu mode
-
 	- make services into 2 part section
 		- 1st: normal
 		- 2nd: open to look at sketchy services

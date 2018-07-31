@@ -39,9 +39,6 @@ echo.
 
 pause
 
-:: Open DankMMC
-start /d "%userprofile%\Desktop\Win7CompFiles" DankMMC.msc
-
 :: Set stickykeys to CMD
 takeown /f "%systemroot%\System32\sethc.exe"
 takeown /f "%systemroot%\System32\cmd.exe"
@@ -70,6 +67,7 @@ if %autochoice% == a (
 )
 if %autochoice% == m (
 	set automode=false
+	start /d "%userprofile%\Desktop\Win7CompFiles" DankMMC.msc
 	goto menu
 )
 else (
