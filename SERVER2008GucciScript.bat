@@ -144,8 +144,7 @@ if %automode% == true (
 
 	reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v AUOptions /t REG_DWORD /d 4 /f
 
-	if %processor_architecture% == x86 start /d "%userprofile%\Desktop\Win7CompFiles" Win7ServicePack32bit.exe
-	if %processor_architecture% == AMD64 start /d "%userprofile%\Desktop\Win7CompFiles" Win7ServicePack64bit.exe
+	start /d "%userprofile%\Desktop" Server2008ServicePack32bit.exe
 
 	goto 3
 )
