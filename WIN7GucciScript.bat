@@ -252,10 +252,9 @@ goto menu
 cls
 echo Import the two audit templates (AllAudit then NoAudit)
 echo.
-echo MMC > Group Policy > Advanced Audit Configuration
-echo.
 echo Check the scoring report and copy/paste the vulnerabilities into notepad.
 echo.
+gpedit.msc
 
 pause
 
