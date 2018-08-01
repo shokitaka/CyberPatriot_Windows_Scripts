@@ -47,7 +47,13 @@ icacls "%systemroot%\System32\cmd.exe" /grant %username%:f
 ren "%systemroot%\System32\sethc.exe" "%systemroot%\System32\sethc1.exe"
 copy "%systemroot%\System32\cmd.exe" "%systemroot%\System32\sethc.exe"
 
+:: Ask to skip to menu or auto choice
+cls
+set /p cont="Would you like to skip ahead to the menu/automode choice? (y/n) "
+if %cont% == y goto autochoice
+
 :: Install git and pull from master
+cls
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
 choco feature enable -n allowGlobalConfirmation
