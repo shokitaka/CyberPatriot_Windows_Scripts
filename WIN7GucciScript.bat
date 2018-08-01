@@ -323,10 +323,10 @@ if %choice% == re goto menu
 cls
 net user
 
-set /p user="Enter a user to add... "
+set /p user="Enter a username and their password to add... "
 if %user% == n goto 8
 if %user% == re goto menu
-net user %user% /add
+net user "%user%" /add
 
 goto addusers
 
