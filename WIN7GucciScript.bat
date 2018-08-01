@@ -47,6 +47,20 @@ icacls "%systemroot%\System32\cmd.exe" /grant %username%:f
 ren "%systemroot%\System32\sethc.exe" "%systemroot%\System32\sethc1.exe"
 copy "%systemroot%\System32\cmd.exe" "%systemroot%\System32\sethc.exe"
 
+:: Install git and pull from master
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+
+choco feature enable -n allowGlobalConfirmation
+
+choco install git
+pause
+
+cd %userprofile%\Desktop
+git init
+git remote add origin https://github.com/Marduk28/CyberPatriot_Windows_Scripts.git
+git fetch origin master
+git checkout origin/master Win7CompFiles OurGloriousChecklist2018_Windows.txt
+
 :: Ask if menu or automode
 :autochoice
 cls
@@ -1057,5 +1071,5 @@ goto menu
 
 :: Open master checklist
 :32
-start /d "%userprofile%\Desktop\Win7CompFiles" OurGloriousChecklist2018_Windows.txt
+start /d "%userprofile%\Desktop" OurGloriousChecklist2018_Windows.txt
 goto menu

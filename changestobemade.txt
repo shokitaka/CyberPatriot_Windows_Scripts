@@ -1,7 +1,5 @@
 Changes that need to be made:
 
-	- **VERY IMPORTANT**: MAKE A TING to mkdir and pull from github cool at start
-
 	- add sysinternals section midway through
 
 	- change user sections to use one line
@@ -11,5 +9,3 @@ Changes that need to be made:
 	- add event viewer section
 
 	- update checklist to reflect new sections
-
-	- update open glorious checklist at end
